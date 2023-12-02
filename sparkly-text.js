@@ -18,6 +18,7 @@ class SparklyText extends HTMLElement {
 			--_sparkle-base-color: var(--sparkly-text-color, #4ab9f8);
 
 			position: relative;
+			z-index: 0;
 		}
 
 		sparkly-text .sparkle-wrapper {
