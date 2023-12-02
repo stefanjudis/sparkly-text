@@ -10,6 +10,9 @@
   "files": [
     "sparkly-text.js"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "keywords": [
     "web components",
     "custom elements"
