@@ -1,0 +1,22 @@
+{
+  "name": "@stefanjudis/sparkly-text",
+  "version": "1.0.0",
+  "description": "A small web component for making your text spark.",
+  "main": "sparkly-text.js",
+  "scripts": {
+    "start": "npx live-server ."
+  },
+  "keywords": [
+    "web components",
+    "custom elements"
+  ],
+  "author": {
+    "name": "Stefan Judis",
+    "email": "stefanjudis@gmail.com",
+    "url": "https://www.stefanjudis.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "live-server": "^1.2.2"
+  }
+}
