@@ -6,6 +6,9 @@
   "scripts": {
     "start": "npx live-server ."
   },
+  "files": [
+    "sparkly-text.js"
+  ],
   "keywords": [
     "web components",
     "custom elements"
