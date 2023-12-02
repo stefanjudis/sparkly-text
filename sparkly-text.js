@@ -14,7 +14,7 @@ class SparklyText extends HTMLElement {
     const css = `
 		sparkly-text {
 			--_sparkle-base-size: var(--sparkly-text-size, 1em);
-			--_sparkle-base-animation-length: var(--sparkly-text-animation-length, 2s);
+			--_sparkle-base-animation-length: var(--sparkly-text-animation-length, 1.5s);
 			--_sparkle-base-color: var(--sparkly-text-color, #4ab9f8);
 
 			position: relative;
