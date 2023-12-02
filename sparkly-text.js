@@ -31,8 +31,8 @@ class SparklyText extends HTMLElement {
 		}
 
 		sparkly-text svg {
-			width: var(--_sparkle-base-size);
-			height: var(--_sparkle-base-size);
+			width: var(--_sparkle-base-size) !important;
+			height: var(--_sparkle-base-size) !important;
 			display: block;
 			position: absolute;
 			pointer-events: none;
