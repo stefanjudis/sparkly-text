@@ -4,7 +4,7 @@ class SparklyText extends HTMLElement {
   static identifiers = {};
 
   #numberOfSparkles = 3;
-  #sparkleSvg = `<svg width="1200" height="1200" viewBox="0 0 1200 1200">
+  #sparkleSvg = `<svg width="1200" height="1200" viewBox="0 0 1200 1200" aria-hidden="true">
 		<path fill="red" d="m611.04 866.16c17.418-61.09 50.25-116.68 95.352-161.42 45.098-44.742 100.94-77.133 162.17-94.062l38.641-10.68-38.641-10.68c-61.227-16.93-117.07-49.32-162.17-94.062-45.102-44.738-77.934-100.33-95.352-161.42l-11.039-38.641-11.039 38.641c-17.418 61.09-50.25 116.68-95.352 161.42-45.098 44.742-100.94 77.133-162.17 94.062l-38.641 10.68 38.641 10.68c61.227 16.93 117.07 49.32 162.17 94.062 45.102 44.738 77.934 100.33 95.352 161.42l11.039 38.641z"/>
 	</svg>`;
 
@@ -35,6 +35,7 @@ class SparklyText extends HTMLElement {
 			height: var(--_sparkle-base-size);
 			display: block;
 			position: absolute;
+			pointer-events: none;
 		}
 
 		sparkly-text svg path {
@@ -44,15 +45,18 @@ class SparklyText extends HTMLElement {
 		@keyframes sparkle-spin {
 			0% {
 				scale: 0;
+				opacity: 0;
 				rotate: 0deg;
 			}
 
 			50% {
 				scale: 1;
+				opacity: 1;
 			}
 
 			100% {
 				scale: 0;
+				opacity: 0;
 				rotate: 180deg;
 			}
 		}
@@ -75,7 +79,9 @@ class SparklyText extends HTMLElement {
 
   addSparkles() {
     for (let i = 0; i < this.#numberOfSparkles; i++) {
-      this.addSparkle();
+      setTimeout(() => {
+        this.addSparkle();
+      }, i * 500);
     }
   }
 
