@@ -30,7 +30,7 @@ You have a few options (choose one of these):
 
 ```html
 <!-- Host yourself -->
-<script type="module" src="sparky-text.js"></script>
+<script type="module" src="sparkly-text.js"></script>
 ```
 
 ```html
