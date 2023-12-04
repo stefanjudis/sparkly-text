@@ -48,4 +48,4 @@ You have a few options (choose one of these):
 
 ## Kudos
 
-Big thanks goes to @zachleat for all [his fancy components such as `table-saw`](https://github.com/zachleat/table-saw).
+Big thanks goes to [Zach Leatherman](https://www.zachleat.com/) for all [his fancy components such as `table-saw`](https://github.com/zachleat/table-saw).
