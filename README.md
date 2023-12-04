@@ -28,17 +28,20 @@ You have a few options (choose one of these):
 
 ### Usage
 
-```
+```html
 <!-- Host yourself -->
 <script type="module" src="table-saw.js"></script>
 ```
 
-```
+```html
 <!-- 3rd party CDN, not recommended for production use -->
-<script type="module" src="https://www.unpkg.com/@stefanjudis/sparkly-text"></script>
+<script
+  type="module"
+  src="https://www.unpkg.com/@stefanjudis/sparkly-text"
+></script>
 ```
 
-```
+```html
 <!-- 3rd party CDN, not recommended for production use -->
 <script type="module" src="https://esm.sh/@stefanjudis/sparkly-text"></script>
 ```
