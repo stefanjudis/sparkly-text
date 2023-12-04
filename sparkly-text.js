@@ -89,9 +89,6 @@ class SparklyText extends HTMLElement {
     const sparkleWrapper = document.createElement("span");
     sparkleWrapper.classList.add("sparkle-wrapper");
     sparkleWrapper.innerHTML = this.#sparkleSvg;
-    console.log(
-      `calc(${Math.random() * 120 - 10}% - var(--_sparkle-base-size) / 2))`
-    );
     sparkleWrapper.style.top = `calc(${
       Math.random() * 110 - 5
     }% - var(--_sparkle-base-size) / 2)`;
