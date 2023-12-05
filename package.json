@@ -23,7 +23,7 @@
     "url": "https://www.stefanjudis.com"
   },
   "license": "MIT",
-  "dependencies": {
+  "devDependencies": {
     "live-server": "^1.2.2"
   }
 }
