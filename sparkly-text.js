@@ -26,9 +26,14 @@ class SparklyText extends HTMLElement {
 			z-index: -1;
 			width: var(--_sparkle-base-size);
 			height: var(--_sparkle-base-size);
-			animation: sparkle-spin var(--_sparkle-base-animation-length) linear 1;
 			transform-origin: center;
 		}
+
+    @media (prefers-reduced-motion: no-preference) {
+      sparkly-text .sparkle-wrapper {
+        animation: sparkle-spin var(--_sparkle-base-animation-length) linear 1;
+      }
+    }
 
 		sparkly-text svg {
 			width: var(--_sparkle-base-size) !important;
@@ -102,7 +107,8 @@ class SparklyText extends HTMLElement {
     });
 
     setTimeout(() => {
-      this.addSparkle();
+      const {matches:motionOK} = window.matchMedia('(prefers-reduced-motion: no-preference)');
+      if (motionOK) this.addSparkle();
     }, 2000 + Math.random() * 1000);
   }
 }
