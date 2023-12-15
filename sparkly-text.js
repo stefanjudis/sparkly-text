@@ -1,3 +1,5 @@
+let sheet;
+
 class SparklyText extends HTMLElement {
   #numberOfSparkles = 3;
   #sparkleSvg = `<svg width="1200" height="1200" viewBox="0 0 1200 1200" aria-hidden="true">
@@ -5,63 +7,65 @@ class SparklyText extends HTMLElement {
 	</svg>`;
 
   generateCss() {
-    const css = `
-		:host {
-			--_sparkle-base-size: var(--sparkly-text-size, 1em);
-			--_sparkle-base-animation-length: var(--sparkly-text-animation-length, 1.5s);
-			--_sparkle-base-color: var(--sparkly-text-color, #4ab9f8);
+    if (!sheet) {
+      const css = `
+        :host {
+          --_sparkle-base-size: var(--sparkly-text-size, 1em);
+          --_sparkle-base-animation-length: var(--sparkly-text-animation-length, 1.5s);
+          --_sparkle-base-color: var(--sparkly-text-color, #4ab9f8);
 
-			position: relative;
-			z-index: 0;
-		}
+          position: relative;
+          z-index: 0;
+        }
 
-		.sparkle-wrapper {
-			position: absolute;
-			z-index: -1;
-			width: var(--_sparkle-base-size);
-			height: var(--_sparkle-base-size);
-			transform-origin: center;
-		}
+        .sparkle-wrapper {
+          position: absolute;
+          z-index: -1;
+          width: var(--_sparkle-base-size);
+          height: var(--_sparkle-base-size);
+          transform-origin: center;
+        }
 
-    @media (prefers-reduced-motion: no-preference) {
-      .sparkle-wrapper {
-        animation: sparkle-spin var(--_sparkle-base-animation-length) linear 1;
-      }
-    }
+        @media (prefers-reduced-motion: no-preference) {
+          .sparkle-wrapper {
+            animation: sparkle-spin var(--_sparkle-base-animation-length) linear 1;
+          }
+        }
 
-		svg {
-			width: var(--_sparkle-base-size) !important;
-			height: var(--_sparkle-base-size) !important;
-			display: block;
-			position: absolute;
-			pointer-events: none;
-		}
+        svg {
+          width: var(--_sparkle-base-size) !important;
+          height: var(--_sparkle-base-size) !important;
+          display: block;
+          position: absolute;
+          pointer-events: none;
+        }
 
-		svg path {
-			fill: var(--_sparkle-base-color);
-		}
+        svg path {
+          fill: var(--_sparkle-base-color);
+        }
 
-		@keyframes sparkle-spin {
-			0% {
-				scale: 0;
-				opacity: 0;
-				rotate: 0deg;
-			}
+        @keyframes sparkle-spin {
+          0% {
+            scale: 0;
+            opacity: 0;
+            rotate: 0deg;
+          }
 
-			50% {
-				scale: 1;
-				opacity: 1;
-			}
+          50% {
+            scale: 1;
+            opacity: 1;
+          }
 
-			100% {
-				scale: 0;
-				opacity: 0;
-				rotate: 180deg;
-			}
-		}
+          100% {
+            scale: 0;
+            opacity: 0;
+            rotate: 180deg;
+          }
+        }
 `;
-    let sheet = new CSSStyleSheet();
-    sheet.replaceSync(css);
+      sheet = new CSSStyleSheet();
+      sheet.replaceSync(css);
+    }
     this.shadowRoot.adoptedStyleSheets = [sheet];
   }
 
