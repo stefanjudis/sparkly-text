@@ -66,7 +66,8 @@ class SparklyText extends HTMLElement {
   }
 
   connectedCallback() {
-    if (this.shadowRoot) {
+    // https://caniuse.com/mdn-api_cssstylesheet_replacesync
+    if (this.shadowRoot || !("replaceSync" in CSSStyleSheet.prototype)) {
       return;
     }
 
