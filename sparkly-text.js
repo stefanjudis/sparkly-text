@@ -1,6 +1,9 @@
 let sheet;
 let sparkleTemplate;
 
+// https://caniuse.com/mdn-api_cssstylesheet_replacesync
+const supportsConstructibleStylesheets = ("replaceSync" in CSSStyleSheet.prototype);
+
 class SparklyText extends HTMLElement {
   #numberOfSparkles = 3;
   #sparkleSvg = `<svg width="1200" height="1200" viewBox="0 0 1200 1200" aria-hidden="true">
@@ -64,15 +67,24 @@ class SparklyText extends HTMLElement {
           }
         }
 `;
-      sheet = new CSSStyleSheet();
-      sheet.replaceSync(css);
+      if (supportsConstructibleStylesheets) {
+        sheet = new CSSStyleSheet();
+        sheet.replaceSync(css);
+      } else {
+        sheet = document.createElement("style");
+        sheet.textContent = css;
+      }
     }
-    this.shadowRoot.adoptedStyleSheets = [sheet];
+
+    if (supportsConstructibleStylesheets) {
+      this.shadowRoot.adoptedStyleSheets = [sheet];
+    } else {
+      this.shadowRoot.append(sheet.cloneNode(true));
+    }
   }
 
   connectedCallback() {
-    // https://caniuse.com/mdn-api_cssstylesheet_replacesync
-    if (this.shadowRoot || !("replaceSync" in CSSStyleSheet.prototype)) {
+    if (this.shadowRoot) {
       return;
     }
 
