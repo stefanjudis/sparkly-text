@@ -117,7 +117,7 @@ class SparklyText extends HTMLElement {
 
     setTimeout(() => {
       const {matches:motionOK} = window.matchMedia('(prefers-reduced-motion: no-preference)');
-      if (motionOK) this.addSparkle();
+      if (motionOK && this.isConnected) this.addSparkle();
     }, 2000 + Math.random() * 1000);
   }
 }
