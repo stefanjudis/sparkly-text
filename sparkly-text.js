@@ -1,4 +1,5 @@
 let sheet;
+let sparkleTemplate;
 
 class SparklyText extends HTMLElement {
   #numberOfSparkles = 3;
@@ -95,9 +96,13 @@ class SparklyText extends HTMLElement {
   }
 
   addSparkle() {
-    const sparkleWrapper = document.createElement("span");
-    sparkleWrapper.classList.add("sparkle-wrapper");
-    sparkleWrapper.innerHTML = this.#sparkleSvg;
+    if (!sparkleTemplate) {
+      sparkleTemplate = document.createElement("span");
+      sparkleTemplate.classList.add("sparkle-wrapper");
+      sparkleTemplate.innerHTML = this.#sparkleSvg;
+    }
+
+    const sparkleWrapper = sparkleTemplate.cloneNode(true);
     sparkleWrapper.style.top = `calc(${
       Math.random() * 110 - 5
     }% - var(--_sparkle-base-size) / 2)`;
