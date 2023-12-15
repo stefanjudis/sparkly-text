@@ -1,5 +1,3 @@
-let _needsStyles = true;
-
 class SparklyText extends HTMLElement {
   #numberOfSparkles = 3;
   #sparkleSvg = `<svg width="1200" height="1200" viewBox="0 0 1200 1200" aria-hidden="true">
@@ -7,10 +5,8 @@ class SparklyText extends HTMLElement {
 	</svg>`;
 
   generateCss() {
-    if (!_needsStyles) return;
-
     const css = `
-		sparkly-text {
+		:host {
 			--_sparkle-base-size: var(--sparkly-text-size, 1em);
 			--_sparkle-base-animation-length: var(--sparkly-text-animation-length, 1.5s);
 			--_sparkle-base-color: var(--sparkly-text-color, #4ab9f8);
@@ -19,7 +15,7 @@ class SparklyText extends HTMLElement {
 			z-index: 0;
 		}
 
-		sparkly-text .sparkle-wrapper {
+		.sparkle-wrapper {
 			position: absolute;
 			z-index: -1;
 			width: var(--_sparkle-base-size);
@@ -28,12 +24,12 @@ class SparklyText extends HTMLElement {
 		}
 
     @media (prefers-reduced-motion: no-preference) {
-      sparkly-text .sparkle-wrapper {
+      .sparkle-wrapper {
         animation: sparkle-spin var(--_sparkle-base-animation-length) linear 1;
       }
     }
 
-		sparkly-text svg {
+		svg {
 			width: var(--_sparkle-base-size) !important;
 			height: var(--_sparkle-base-size) !important;
 			display: block;
@@ -41,7 +37,7 @@ class SparklyText extends HTMLElement {
 			pointer-events: none;
 		}
 
-		sparkly-text svg path {
+		svg path {
 			fill: var(--_sparkle-base-color);
 		}
 
@@ -66,16 +62,21 @@ class SparklyText extends HTMLElement {
 `;
     let sheet = new CSSStyleSheet();
     sheet.replaceSync(css);
-    document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
-    _needsStyles = false;
+    this.shadowRoot.adoptedStyleSheets = [sheet];
   }
 
   connectedCallback() {
+    if (this.shadowRoot) {
+      return;
+    }
+
     this.#numberOfSparkles = parseInt(
       this.getAttribute("number-of-sparkles") || `${this.#numberOfSparkles}`,
       10
     );
 
+    this.attachShadow({ mode: "open" });
+    this.shadowRoot.append(document.createElement("slot"));
     this.generateCss();
     this.addSparkles();
   }
@@ -99,7 +100,7 @@ class SparklyText extends HTMLElement {
       Math.random() * 110 - 5
     }% - var(--_sparkle-base-size) / 2)`;
 
-    this.appendChild(sparkleWrapper);
+    this.shadowRoot.appendChild(sparkleWrapper);
     sparkleWrapper.addEventListener("animationend", () => {
       sparkleWrapper.remove();
     });
