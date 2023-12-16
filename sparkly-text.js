@@ -94,6 +94,19 @@ class SparklyText extends HTMLElement {
       );
       this.addSparkles();
     }
+
+    motionOK.addEventListener("change", this.motionOkChange);
+  }
+
+  disconnectedCallback() {
+    motionOK.removeEventListener("change", this.motionOkChange);
+  }
+
+  // Declare as an arrow function to get the appropriate 'this'
+  motionOkChange = () => {
+    if (motionOK.matches) {
+      this.addSparkles();
+    }
   }
 
   addSparkles() {
