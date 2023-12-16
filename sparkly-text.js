@@ -22,26 +22,19 @@ class SparklyText extends HTMLElement {
           z-index: 0;
         }
 
-        .sparkle-wrapper {
+        svg {
           position: absolute;
           z-index: -1;
           width: var(--_sparkle-base-size);
           height: var(--_sparkle-base-size);
           transform-origin: center;
+          pointer-events: none;
         }
 
         @media (prefers-reduced-motion: no-preference) {
-          .sparkle-wrapper {
+          svg {
             animation: sparkle-spin var(--_sparkle-base-animation-length) linear 1;
           }
-        }
-
-        svg {
-          width: var(--_sparkle-base-size) !important;
-          height: var(--_sparkle-base-size) !important;
-          display: block;
-          position: absolute;
-          pointer-events: none;
         }
 
         svg path {
@@ -109,9 +102,9 @@ class SparklyText extends HTMLElement {
 
   addSparkle() {
     if (!sparkleTemplate) {
-      sparkleTemplate = document.createElement("span");
-      sparkleTemplate.classList.add("sparkle-wrapper");
-      sparkleTemplate.innerHTML = this.#sparkleSvg;
+      const span = document.createElement("span");
+      span.innerHTML = this.#sparkleSvg;
+      sparkleTemplate = span.firstElementChild.cloneNode(true);
     }
 
     const sparkleWrapper = sparkleTemplate.cloneNode(true);
