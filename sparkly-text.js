@@ -4,6 +4,8 @@ let sparkleTemplate;
 // https://caniuse.com/mdn-api_cssstylesheet_replacesync
 const supportsConstructibleStylesheets = ("replaceSync" in CSSStyleSheet.prototype);
 
+const motionOK = window.matchMedia('(prefers-reduced-motion: no-preference)');
+
 class SparklyText extends HTMLElement {
   #numberOfSparkles = 3;
   #sparkleSvg = `<svg width="1200" height="1200" viewBox="0 0 1200 1200" aria-hidden="true">
@@ -77,19 +79,21 @@ class SparklyText extends HTMLElement {
   }
 
   connectedCallback() {
-    if (this.shadowRoot) {
-      return;
+    const needsSparkles = motionOK.matches || !this.shadowRoot;
+
+    if (!this.shadowRoot) {
+      this.attachShadow({ mode: "open" });
+      this.generateCss();
+      this.shadowRoot.append(document.createElement("slot"));
     }
 
-    this.#numberOfSparkles = parseInt(
-      this.getAttribute("number-of-sparkles") || `${this.#numberOfSparkles}`,
-      10
-    );
-
-    this.attachShadow({ mode: "open" });
-    this.shadowRoot.append(document.createElement("slot"));
-    this.generateCss();
-    this.addSparkles();
+    if (needsSparkles) {
+      this.#numberOfSparkles = parseInt(
+        this.getAttribute("number-of-sparkles") || `${this.#numberOfSparkles}`,
+        10
+      );
+      this.addSparkles();
+    }
   }
 
   addSparkles() {
@@ -121,8 +125,7 @@ class SparklyText extends HTMLElement {
     });
 
     setTimeout(() => {
-      const {matches:motionOK} = window.matchMedia('(prefers-reduced-motion: no-preference)');
-      if (motionOK && this.isConnected) this.addSparkle();
+      if (motionOK.matches && this.isConnected) this.addSparkle();
     }, 2000 + Math.random() * 1000);
   }
 }
