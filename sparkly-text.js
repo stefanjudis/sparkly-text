@@ -34,7 +34,7 @@ class SparklyText extends HTMLElement {
 
     @media (prefers-reduced-motion: no-preference) {
       svg {
-        animation: sparkle-spin var(--_sparkle-base-animation-length) linear 1;
+        animation: sparkle-spin var(--_sparkle-base-animation-length) linear infinite;
       }
     }
 
@@ -124,12 +124,19 @@ class SparklyText extends HTMLElement {
   addSparkles() {
     for (let i = 0; i < this.#numberOfSparkles; i++) {
       setTimeout(() => {
-        this.addSparkle();
+        this.addSparkle(sparkle => {
+          sparkle.style.top = `calc(${
+            Math.random() * 110 - 5
+          }% - var(--_sparkle-base-size) / 2)`;
+          sparkle.style.left = `calc(${
+            Math.random() * 110 - 5
+          }% - var(--_sparkle-base-size) / 2)`;
+        });
       }, i * 500);
     }
   }
 
-  addSparkle() {
+  addSparkle(update) {
     if (!sparkleTemplate) {
       const span = document.createElement("span");
       span.innerHTML = this.#sparkleSvg;
@@ -137,21 +144,11 @@ class SparklyText extends HTMLElement {
     }
 
     const sparkleWrapper = sparkleTemplate.cloneNode(true);
-    sparkleWrapper.style.top = `calc(${
-      Math.random() * 110 - 5
-    }% - var(--_sparkle-base-size) / 2)`;
-    sparkleWrapper.style.left = `calc(${
-      Math.random() * 110 - 5
-    }% - var(--_sparkle-base-size) / 2)`;
-
+    update(sparkleWrapper);
     this.shadowRoot.appendChild(sparkleWrapper);
-    sparkleWrapper.addEventListener("animationend", () => {
-      sparkleWrapper.remove();
+    sparkleWrapper.addEventListener("animationiteration", () => {
+      update(sparkleWrapper);
     });
-
-    setTimeout(() => {
-      if (motionOK.matches && this.isConnected) this.addSparkle();
-    }, 2000 + Math.random() * 1000);
   }
 }
 
