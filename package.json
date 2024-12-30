@@ -1,6 +1,6 @@
 {
   "name": "@stefanjudis/sparkly-text",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A small web component for making your text spark.",
   "main": "sparkly-text.js",
   "scripts": {
