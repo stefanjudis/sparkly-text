@@ -36,10 +36,24 @@ class SparklyText extends HTMLElement {
       svg {
         animation: sparkle-spin var(--_sparkle-base-animation-length) linear infinite;
       }
+
+      svg.rainbow path {
+        animation: rainbow-colors calc(var(--_sparkle-base-animation-length) * 2) linear infinite;
+      }
     }
 
     svg path {
       fill: var(--_sparkle-base-color);
+    }
+
+    @keyframes rainbow-colors {
+      0%, 100% { fill: #ff0000; }
+      14% { fill: #ff8000; }
+      28% { fill: #ffff00; }
+      42% { fill: #00ff00; }
+      56% { fill: #0000ff; }
+      70% { fill: #4b0082; }
+      84% { fill: #8f00ff; }
     }
 
     @keyframes sparkle-spin {
@@ -144,6 +158,13 @@ class SparklyText extends HTMLElement {
     }
 
     const sparkleWrapper = sparkleTemplate.cloneNode(true);
+    
+    // Add rainbow class if --sparkly-text-color is set to 'rainbow'
+    const styles = getComputedStyle(this);
+    if (styles.getPropertyValue('--sparkly-text-color').trim() === 'rainbow') {
+      sparkleWrapper.classList.add('rainbow');
+    }
+    
     update(sparkleWrapper);
     this.shadowRoot.appendChild(sparkleWrapper);
     sparkleWrapper.addEventListener("animationiteration", () => {
