@@ -6,16 +6,19 @@ A small zero-dependency Web Component to add sparkles to text fragments.
 
 ```html
 <!-- Add sparkles  -->
-<sparkly-text>Hello sparkles</sparkly-text>
+<sparkly-text>Hello world</sparkly-text>
 
 <!-- Increase the number of sparkles  -->
-<sparkly-text number-of-sparkles="5">Hello sparkles</sparkly-text>
+<sparkly-text number-of-sparkles="5">Hello world</sparkly-text>
 
 <!-- Color the sparkles  -->
-<sparkly-text style="--sparkly-text-color: orange">Hello sparkles</sparkly-text>
+<sparkly-text style="--sparkly-text-color: orange">Hello world</sparkly-text>
+
+<!-- Add rainbow colors   -->
+<sparkly-text style="--sparkly-text-color: rainbow">Hello world</sparkly-text>
 
 <!-- Increase the sparkle size  -->
-<sparkly-text style="--sparkly-text-size: 2.5em">Hello sparkles</sparkly-text>
+<sparkly-text style="--sparkly-text-size: 2.5em">Hello world</sparkly-text>
 ```
 
 ## Installation
