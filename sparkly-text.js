@@ -118,14 +118,41 @@ class SparklyText extends HTMLElement {
       if (Number.isNaN(this.#numberOfSparkles)) {
         throw new Error(`Invalid number-of-sparkles value`);
       }
+      this.cleanupSparkles();
       this.addSparkles();
     }
 
     motionOK.addEventListener("change", this.motionOkChange);
+    window.addEventListener("popstate", this.handleNavigation);
+    window.addEventListener("pageshow", this.handlePageShow);
   }
 
   disconnectedCallback() {
     motionOK.removeEventListener("change", this.motionOkChange);
+    window.removeEventListener("popstate", this.handleNavigation);
+    window.removeEventListener("pageshow", this.handlePageShow);
+    this.cleanupSparkles();
+  }
+
+  handleNavigation = () => {
+    if (motionOK.matches) {
+      this.cleanupSparkles();
+      this.addSparkles();
+    }
+  };
+
+  handlePageShow = (event) => {
+    // If the page is being loaded from the bfcache
+    if (event.persisted && motionOK.matches) {
+      this.cleanupSparkles();
+      this.addSparkles();
+    }
+  };
+
+  cleanupSparkles() {
+    // Remove all existing sparkle SVGs
+    const sparkles = this.shadowRoot.querySelectorAll('svg');
+    sparkles.forEach(sparkle => sparkle.remove());
   }
 
   // Declare as an arrow function to get the appropriate 'this'
